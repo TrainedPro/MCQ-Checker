@@ -7,37 +7,37 @@ def read_answer_key(file_path):
 def check_answers(file1_answers, file2_answers):
     count = 1
     wrong = 0
-    for ans1, ans2 in zip(file1_answers, file2_answers):
+    for user_answer, answer_key in zip(file1_answers, file2_answers):
         # Check if there are multiple answers in file1 (considered wrong)
-        if len(ans1) > 1:
+        if len(user_answer) > 1:
             result = "incorrect"
         else:
             # Check if any answer or '*' in file2 matches the corresponding answer in file1
-            if '*' in ans2:
+            if '*' in answer_key:
                 result = "correct"
-            elif ans1[0] in ans2:
+            elif user_answer[0] in answer_key:
                 result = "correct"
             else:
                 result = "incorrect"
 
         if result == "incorrect":
-            print(f"{str(count).rjust(3)}. {result}: {ans1} != {ans2}")
+            print(f"{str(count).rjust(3)}. {result}: {user_answer} != {answer_key}")
             wrong += 1
         count += 1
 
     return wrong
 
 def main():
-    file1_path = "/tmp/test.txt"  # Replace with the actual file path for file1
-    file2_path = "/tmp/test2.txt"  # Replace with the actual file path for file2
+    user_file = "user_answers.txt"
+    answer_file = "answer_key.txt"
 
     # Read answer keys from both files
     print()
-    file1_answers = read_answer_key(file1_path)
-    file2_answers = read_answer_key(file2_path)
+    user_answers = read_answer_key(user_file)
+    key_answers = read_answer_key(answer_file)
 
     # Check and print the correctness of each answer
-    num = check_answers(file1_answers, file2_answers)
+    num = check_answers(user_answers, key_answers)
 
     print(f"\nTotal Incorrect: {num}")
 
